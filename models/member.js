@@ -5,23 +5,27 @@ const { Schema } = mongoose;
 const member = new Schema({
     name: {
         type: String,
+        default: null
     },
     studentId: {
         type: Number,
-        unique: true,
+        default: null,
     },
     club: {
         type: String,
+        default: null,
         enum: ['wink', 'foscar']
     },
     profile: { // 사진 링크로 받기
         type: String,
+        default: null,
     },
     kakaoId: { // 로그인 시 회원 조회 기준 key
-        type: String
+        type: String,
     },
     isAdmin: { // 관리자 분류 key
         type: Boolean,
+        default: false
     }
 });
 

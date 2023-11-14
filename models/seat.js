@@ -10,7 +10,8 @@ const seat = new Schema({
     },
     status: { // 좌석 이용 상태
         type: String,
-        enum: ['using', 'notUsed']
+        enum: ['using', 'notUsed'],
+        default: 'notUsed'
     },
     startTime: {
         type: Date,

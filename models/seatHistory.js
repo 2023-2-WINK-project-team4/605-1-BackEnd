@@ -9,7 +9,7 @@ const seatHistory = new Schema({
     },
     seatNumber: {
         type: Number,
-        required: true
+        required: true,
     },
     seatStartTime: {
         type: Date,

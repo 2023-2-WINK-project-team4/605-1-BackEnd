@@ -17,7 +17,8 @@ const meetingTable = new Schema({
     },
     status: {
         type: String,
-        enum: ['using', 'notUsed']
+        enum: ['using', 'notUsed'],
+        default: 'notUsed'
     }
 })
 
