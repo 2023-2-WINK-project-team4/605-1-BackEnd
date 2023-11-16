@@ -16,6 +16,11 @@ const seat = new Schema({
     startTime: {
         type: Date,
         default: Date.now, // 다큐먼트 생성 시 현재 시각으로
+    },
+    memberId: { // member의 _id 연결
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Member'
     }
 });
 
