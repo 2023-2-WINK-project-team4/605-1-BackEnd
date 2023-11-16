@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const seatHistory = new Schema({
-    studentId: {
-        type: Number,
+    member: { // member_name
+        type: String,
         required: true,
     },
     seatNumber: {
@@ -13,7 +13,7 @@ const seatHistory = new Schema({
     },
     seatStartTime: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     }
 })
 

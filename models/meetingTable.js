@@ -6,7 +6,6 @@ const meetingTable = new Schema({
     member: { // member 연결 (이름)
         type: String,
         required: true,
-        ref: 'Member'
     },
     startTime: {
         type: Date,
@@ -24,7 +23,6 @@ const meetingTable = new Schema({
     club: { // club 연결
         type: String,
         required: true,
-        ref: 'Member'
     }
 })
 
