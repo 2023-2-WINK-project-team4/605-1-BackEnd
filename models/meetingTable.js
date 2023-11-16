@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const meetingTable = new Schema({
-    memberId: { // member의 _id 연결
-        type: mongoose.Schema.Types.ObjectId,
+    member: { // member 연결 (이름)
+        type: String,
         required: true,
         ref: 'Member'
     },
