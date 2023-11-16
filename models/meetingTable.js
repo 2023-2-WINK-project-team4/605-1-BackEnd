@@ -20,6 +20,11 @@ const meetingTable = new Schema({
         type: String,
         enum: ['using', 'notUsed'],
         default: 'notUsed'
+    },
+    club: { // club 연결
+        type: String,
+        required: true,
+        ref: 'Member'
     }
 })
 
