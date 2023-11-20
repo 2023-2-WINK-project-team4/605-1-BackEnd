@@ -10,6 +10,7 @@ require('dotenv').config();
 
 // router import
 const indexRouter = require('./routes')
+const userRouter = require('./routes/user')
 
 // express 실행
 const app = express();
@@ -39,7 +40,7 @@ app.use(session({
 
 // set Router
 app.use('/', indexRouter)
-
+app.use('/user', userRouter)
 
 
 
