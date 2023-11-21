@@ -1,8 +1,10 @@
 const express = require('express')
 const passport = require('passport')
+const multer = require('multer')
 
 const authRouter = express.Router()
 const { join } = require('../controller/authController')
+const upload = multer({ dest: 'profiles/' })
 
 let kakaoId = null;
 
@@ -34,6 +36,7 @@ authRouter.get(
     }
 );
 
+
 // 회원 가입 라우터
 authRouter.route('/join')
     .get((req, res) => {
@@ -50,6 +53,6 @@ authRouter.route('/join')
             });
         }
     })
-    .post(join);
+    .post(upload.single('profile'), join);
 
 module.exports = authRouter;

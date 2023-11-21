@@ -1,5 +1,6 @@
 const Member = require('../models/member');
 
+
 // 회원 가입 로직
 exports.join = async (req, res) => {
     try {
@@ -9,7 +10,7 @@ exports.join = async (req, res) => {
                 name: req.body.name,
                 studentId: req.body.studentId,
                 club: req.body.club,
-                profile: req.body.profile,
+                profile: req.file.path,
             }
         });
         res.status(200).json({
