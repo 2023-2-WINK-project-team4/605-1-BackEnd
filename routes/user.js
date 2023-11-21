@@ -31,6 +31,8 @@ const upload = multer({
 
 router.patch('/update', upload.single('profile'), editMember);
 
+router.get('/', getUser);
+
 router.get('/update', getUser);
 
 module.exports = router;
