@@ -7,9 +7,9 @@ const fs = require("fs");
 const router = express.Router();
 
 try {
-    fs.readdirSync('uploads');
+    fs.readdirSync('profiles');
 } catch (error) {
-    fs.mkdirSync('uploads');
+    fs.mkdirSync('profiles');
 }
 
 const upload = multer({
