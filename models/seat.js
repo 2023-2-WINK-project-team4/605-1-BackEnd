@@ -10,11 +10,16 @@ const seat = new Schema({
     },
     status: { // 좌석 이용 상태
         type: String,
-        enum: ['using', 'notUsed']
+        enum: ['using', 'notUsed'],
+        default: 'notUsed'
     },
     startTime: {
         type: Date,
         default: Date.now, // 다큐먼트 생성 시 현재 시각으로
+    },
+    memberId: { // member의 _id 연결
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
     }
 });
 
