@@ -2,7 +2,7 @@ const express = require('express')
 const passport = require('passport')
 
 const authRouter = express.Router()
-const { join } = require('../controller/memberController')
+const { join } = require('../controller/authController')
 
 let kakaoId = null;
 
@@ -15,20 +15,20 @@ authRouter.get(
     }), async (req, res) => {
         if (!req.user) {
             res.status(400).json({
-                "msg": "사용자가 존재하지 않음."
+                msg: "사용자가 존재하지 않음."
             })
         }
         if (req.user.name === null) {
             kakaoId = req.user.kakaoId;
             res.status(302).json({
-                msg: "회원가입 필요",
+                msg: "sign_up",
                 redirect: "/auth/join",
             });
         } else {
             res.status(200).json({
                 userId: req.user._id,
                 club: req.user.club,
-                msg: "success login",
+                msg: "success",
             })
         }
     }
@@ -40,13 +40,13 @@ authRouter.route('/join')
         try{
             if(kakaoId !== null) {
                 res.json({
-                    "kakaoId": kakaoId
+                    kakaoId: kakaoId
                 })
             } else res.status(400).send("카카오 아이디가 없음")
         } catch (error) {
             console.error(error);
             res.status(400).json({
-                "message": error.message
+                message: error.message
             });
         }
     })

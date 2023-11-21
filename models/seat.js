@@ -20,7 +20,6 @@ const seat = new Schema({
     memberId: { // member의 _id 연결
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Member'
     }
 });
 
