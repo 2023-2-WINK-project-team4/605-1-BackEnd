@@ -4,10 +4,6 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-const storage = multer({
-    dest: 'uploads/'
-})
-
 const router = express.Router();
 
 try {
