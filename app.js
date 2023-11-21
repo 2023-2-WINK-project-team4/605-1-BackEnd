@@ -13,6 +13,7 @@ require('dotenv').config();
 
 // router import
 const indexRouter = require('./routes')
+
 const authRouter = require("./routes/auth");
 
 
@@ -43,6 +44,7 @@ app.use(passport.session());
 
 // set Router
 app.use('/', indexRouter)
+
 app.use('/auth', authRouter);
 
 
