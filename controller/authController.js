@@ -10,7 +10,7 @@ exports.join = async (req, res) => {
                 name: req.body.name,
                 studentId: req.body.studentId,
                 club: req.body.club,
-                profile: req.file.path,
+                profile: req.file.filename,
             }
         });
         res.status(200).json({
