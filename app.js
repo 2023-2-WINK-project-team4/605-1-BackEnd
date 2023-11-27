@@ -4,12 +4,11 @@ const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const path = require('path')
-
 require('dotenv').config();
 
 
 // router import
-const indexRouter = require('./routes')
+const tableRouter = require('./routes/table')
 
 // express 실행
 const app = express();
@@ -37,9 +36,11 @@ app.use(session({
 }));
 
 
-// set Router
-app.use('/', indexRouter)
 
+
+
+// set Router
+app.use('/table',tableRouter)
 
 
 
