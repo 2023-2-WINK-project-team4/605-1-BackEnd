@@ -17,7 +17,7 @@ const member = new Schema({
         enum: ['wink', 'foscar']
     },
     profile: { // 사진 링크로 받기
-        type: String,
+        type: Object,
         default: null,
     },
     kakaoId: { // 로그인 시 회원 조회 기준 key

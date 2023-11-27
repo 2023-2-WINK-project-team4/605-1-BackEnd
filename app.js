@@ -26,10 +26,11 @@ app.set('port', process.env.PORT || 8080)
 passportConfig(); // passport 설정
 connect(); // mongoose 접속
 
+
 // 미들웨어 실행
-app.use(morgan('dev'));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json());
+app.use(morgan('dev')); // morgan 실행
+app.use(express.static(path.join(__dirname, 'public'))); // 정적 파일 연결
+app.use(express.json()); // json
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
