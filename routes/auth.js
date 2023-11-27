@@ -1,8 +1,22 @@
 const express = require('express')
 const passport = require('passport')
-
+const multer = require('multer')
+const path = require('path')
 const authRouter = express.Router()
 const { join } = require('../controller/authController')
+const uploads = multer({
+    storage: multer.diskStorage({
+        destination(req, file, cb) {
+            cb(null, "profiles/");
+        },
+        filename(req, file, cb) {
+            const ext = path.extname(file.originalname);
+            cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+        },
+    }),
+    limits: { fileSize: 5 * 1024 * 1024 },
+});
+
 
 let kakaoId = null;
 
@@ -34,6 +48,7 @@ authRouter.get(
     }
 );
 
+
 // 회원 가입 라우터
 authRouter.route('/join')
     .get((req, res) => {
@@ -50,6 +65,6 @@ authRouter.route('/join')
             });
         }
     })
-    .post(join);
+    .post(uploads.single('profile'), join);
 
 module.exports = authRouter;
