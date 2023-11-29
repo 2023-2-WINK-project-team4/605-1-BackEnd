@@ -2,6 +2,36 @@ const Seat = require('../models/seat');
 const SeatHistory = require('../models/seatHistory');
 const Member = require('../models/member');
 
+// 내 좌석 대여 조회
+exports.checkMySeat = async (req, res) => {
+    try {
+        const memberId = req.memberId;
+        const member = await Member.findById(memberId);
+        if (!member) {
+            res.status(400).json({
+                msg: "세션이 종료됐거나 사용자가 올바르지 않음."
+            });
+            return;
+        }
+        const seat = await Seat.findOne({ memberId: memberId });
+        if (seat !== null) {
+            res.status(200).json({
+                seatNumber: seat.number,
+                startTime : seat.startTime
+            });
+        } else {
+            res.status(200).json({
+                message: "이용 중인 좌석이 없습니다."
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({
+            error: error.message
+        });
+    }
+}
+// 좌석 대여
 exports.rentSeat = async (req, res) => {
     const { seatNumber } = req.body;
     const memberId = req.memberId;
@@ -36,10 +66,12 @@ exports.rentSeat = async (req, res) => {
     }
 };
 
+// 좌석 반납
 exports.returnSeat = async (req, res) => {
-    // 좌석 반납 로직
+
 };
 
-exports.getSeatStatus = async (req, res) => {
-    // 좌석 현황 조회 로직
+// 좌석 조회
+exports.getSeatsStatus = async (req, res) => {
+
 };

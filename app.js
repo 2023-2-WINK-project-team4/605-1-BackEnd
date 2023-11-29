@@ -12,8 +12,6 @@ require('dotenv').config();
 
 
 // router import
-const indexRouter = require('./routes')
-
 const authRouter = require("./routes/auth");
 const seatRouter = require('./routes/seat');
 
@@ -43,8 +41,6 @@ app.use(passport.session());
 
 
 // set Router
-app.use('/', indexRouter)
-
 app.use('/auth', authRouter);
 app.use('/seat', authenticate, seatRouter);
 
