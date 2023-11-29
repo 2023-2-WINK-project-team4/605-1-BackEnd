@@ -117,5 +117,26 @@ exports.returnSeat = async (req, res) => {
 
 // 좌석 조회
 exports.getSeatsStatus = async (req, res) => {
+    const club = req.params.club;
 
+    try {
+        // 해당 클럽의 모든 좌석 조회
+        const seats = await Seat.find({ club }).sort({ number: 1 });
+        const seatsStatus = await Promise.all(seats.map(async (seat) => {
+            // 각 좌석에 대해 memberId로 member 조회
+            const member = await Member.findById(seat.memberId);
+            return {
+                seatNumber: seat.number,
+                seatStatus: seat.status,
+                studentId: member ? member.studentId : null,
+                memberName: member ? member.name : null,
+                memberProfile: member ? member.profile : null,
+                startTime: seat.startTime
+            };
+        }));
+
+        res.json(seatsStatus);
+    } catch (error) {
+        res.status(500).json({ message: '서버 오류' });
+    }
 };
