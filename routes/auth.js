@@ -68,6 +68,6 @@ authRouter.route('/join')
     .post(uploads.single('profile'), join);
 
 // 서비스 로그인 라우터
-authRouter.get('/login/service/:kakaoId', loginWithKakao);
+// authRouter.get('/login/service/:kakaoId', loginWithKakao);
 
 module.exports = authRouter;

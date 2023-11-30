@@ -42,7 +42,8 @@ app.use(passport.session());
 
 // set Router
 app.use('/auth', authRouter);
-app.use('/seat', authenticate, seatRouter);
+// app.use('/seat', authenticate, seatRouter);
+app.use('/seat', seatRouter);
 
 // 에러 라우터 미들웨어
 app.use((req, res, next) => {
