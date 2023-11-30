@@ -6,7 +6,6 @@ const seat = new Schema({
     number: {
         type: Number,
         required: true, // NotNull 속성.
-        // unique: true, // 중복 x
     },
     club: {
         type: String,
@@ -21,13 +20,12 @@ const seat = new Schema({
     },
     startTime: {
         type: Date,
-        default: null, // 다큐먼트 생성 시 현재 시각으로
+        default: null,
     },
     memberId: { // member의 _id 연결
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Member',
         default : null
-        // required: true,
     }
 });
 

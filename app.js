@@ -6,7 +6,7 @@ const session = require('express-session')
 const path = require('path')
 const passport = require('passport')
 const passportConfig = require('./passport')
-const { authenticate } = require('./util/auth/authMiddleware');
+// const { authenticate } = require('./util/auth/authMiddleware');
 
 require('dotenv').config();
 
@@ -31,6 +31,7 @@ app.use(express.json()); // json
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }, // 세션 만료 기간 - 일주일
     resave: false,
     saveUninitialized: false,
     secret: process.env.COOKIE_SECRET,

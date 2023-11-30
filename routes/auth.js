@@ -40,7 +40,7 @@ authRouter.get(
             });
         } else {
             res.status(200).json({
-                userId: req.user._id,
+                kakaoId: req.user.kakaoId,
                 club: req.user.club,
                 msg: "success",
             })
