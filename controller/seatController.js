@@ -99,8 +99,6 @@ exports.returnSeat = async (req, res) => {
             memberId : memberId
         });
 
-        console.log("seat 찾았니?")
-
         await seatHistory.save();
 
         // 좌석 상태 업데이트
