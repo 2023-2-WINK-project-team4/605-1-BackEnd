@@ -4,13 +4,14 @@ const Seat = require("../models/seat");
 exports.home = async (req, res) => {
     try {
         // req.user 및 req.user._id 확인
-        if (!req.user || !req.user._id) {
+        if (!req.user || !req.user.kakaoId) {
             res.status(400).json({
                 msg: "세션이 종료됐거나 사용자가 올바르지 않음."
             });
             return;
         }
-        const seat = await Seat.findOne({ memberId: req.user._id });
+        const seat = await Seat.findOne({ memberId: req.user.kakaoId });
+        console.log("seat", seat);
         if (seat !== null) {
             res.status(200).json({
                 seat: seat?.number
