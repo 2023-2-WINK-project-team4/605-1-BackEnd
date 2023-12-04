@@ -3,7 +3,7 @@ const passport = require('passport')
 const multer = require('multer')
 const path = require('path')
 const authRouter = express.Router()
-const { join } = require('../controller/authController')
+const { join, loginWithKakao } = require('../controller/authController')
 const uploads = multer({
     storage: multer.diskStorage({
         destination(req, file, cb) {
@@ -40,7 +40,7 @@ authRouter.get(
             });
         } else {
             res.status(200).json({
-                userId: req.user._id,
+                kakaoId: req.user.kakaoId,
                 club: req.user.club,
                 msg: "success",
             })
@@ -66,5 +66,8 @@ authRouter.route('/join')
         }
     })
     .post(uploads.single('profile'), join);
+
+// 서비스 로그인 라우터
+// authRouter.get('/login/service/:kakaoId', loginWithKakao);
 
 module.exports = authRouter;
