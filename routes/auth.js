@@ -3,7 +3,7 @@ const passport = require('passport')
 const multer = require('multer')
 const path = require('path')
 const authRouter = express.Router()
-const { join, loginWithKakao } = require('../controller/authController')
+const { join, loginWithKakao, logout} = require('../controller/authController')
 const uploads = multer({
     storage: multer.diskStorage({
         destination(req, file, cb) {
@@ -48,6 +48,7 @@ authRouter.get(
     }
 );
 
+authRouter.get('/logout', logout)
 
 // 회원 가입 라우터
 authRouter.route('/join')
