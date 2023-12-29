@@ -17,9 +17,8 @@ exports.allTable = async (req, res) => {
         startTime: {$gte: startOfDay, $lt: endOfDay }
         }).sort({ startTime: 1 });
         res.json(meetings);
-        console.log(meetings);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 }
 exports.addTable = async (req, res) => {
@@ -33,8 +32,8 @@ exports.addTable = async (req, res) => {
         club
       });
       await newMeeting.save();
-      res.status(201).json({ message: 'success' });
+      res.status(200).json({ message: 'success' });
     } catch (error) {
-      res.status(500).json({ message: 'fail' });
+      res.status(400).json({ message: error.message});
     }
 }
