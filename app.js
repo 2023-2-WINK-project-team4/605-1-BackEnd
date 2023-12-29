@@ -1,18 +1,20 @@
-const express = require("express");
-const connect = require("./models");
-const morgan = require("morgan");
-const cookieParser = require("cookie-parser");
-const session = require("express-session");
-const path = require("path");
-const passport = require("passport");
-const passportConfig = require("./passport");
+const express = require('express')
+const connect = require('./models');
+const morgan = require('morgan')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
+const path = require('path')
+const passport = require('passport')
+const passportConfig = require('./passport')
+// const { authenticate } = require('./util/auth/authMiddleware');
 
-require("dotenv").config();
+require('dotenv').config();
+
 
 // router import
-const indexRouter = require("./routes");
 const userRouter = require("./routes/user");
 const authRouter = require("./routes/auth");
+const seatRouter = require('./routes/seat');
 
 // express 실행
 const app = express();
@@ -28,8 +30,8 @@ app.use(express.static(path.join(__dirname, "public"))); // 정적 파일 연결
 app.use(express.json()); // json
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(
-  session({
+app.use(session({
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }, // 세션 만료 기간 - 일주일
     resave: false,
     saveUninitialized: false,
     secret: process.env.COOKIE_SECRET,
@@ -40,10 +42,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // set Router
-app.use("/", indexRouter);
 app.use("/user", userRouter);
-app.use("/auth", authRouter);
-app.use("/user", userRouter);
+app.use('/auth', authRouter);
+// app.use('/seat', authenticate, seatRouter);
+app.use('/seat', seatRouter);
+
 
 // 에러 라우터 미들웨어
 app.use((req, res, next) => {
