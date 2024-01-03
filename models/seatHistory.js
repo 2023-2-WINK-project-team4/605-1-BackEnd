@@ -3,17 +3,35 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const seatHistory = new Schema({
+    memberName: { // member_name
+        type: String,
+        required: true,
+    },
     studentId: {
         type: Number,
-        required: true,
+        default: null,
+    },
+    club: {
+        type: String,
+        default: null,
+        enum: ['wink', 'foscar']
     },
     seatNumber: {
         type: Number,
-        required: true
+        required: true,
     },
     seatStartTime: {
         type: Date,
-        default: Date.now
+        default: null,
+    },
+    seatEndTime: {
+        type: Date,
+        default: Date.now,
+    },
+    memberId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Member',
+        default : null
     }
 })
 
