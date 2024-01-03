@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const meetingTable = new Schema({
+
     member: { // member 연결 (이름)
         type: String,
         required: true,
@@ -20,8 +21,10 @@ const meetingTable = new Schema({
         enum: ['using', 'notUsed'],
         default: 'notUsed'
     },
-    club: { // club 연결
+
+    club: {
         type: String,
+        enum: ['WINK', 'FOSCAR'],
         required: true,
     }
 })

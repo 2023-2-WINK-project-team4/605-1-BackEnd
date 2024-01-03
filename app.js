@@ -8,6 +8,7 @@ const passport = require('passport')
 const passportConfig = require('./passport')
 // const { authenticate } = require('./util/auth/authMiddleware');
 
+
 require('dotenv').config();
 
 
@@ -15,6 +16,8 @@ require('dotenv').config();
 const userRouter = require("./routes/user");
 const authRouter = require("./routes/auth");
 const seatRouter = require('./routes/seat');
+const tableRouter = require('./routes/table')
+
 
 // express 실행
 const app = express();
@@ -41,11 +44,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 // set Router
 app.use("/user", userRouter);
 app.use('/auth', authRouter);
 // app.use('/seat', authenticate, seatRouter);
 app.use('/seat', seatRouter);
+app.use('/table',tableRouter)
+
 
 
 // 에러 라우터 미들웨어
