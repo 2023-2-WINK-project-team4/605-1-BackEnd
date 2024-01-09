@@ -5,17 +5,16 @@ const Member = require('../models/member');
 exports.join = async (req, res) => {
     try {
         // 받은 값으로 회원 가입 완료.
-        await Member.updateOne({ kakaoId: req.body.kakaoId }, {
+        await Member.updateOne({ _id: req.body.id }, {
             $set: {
                 name: req.body.name,
                 studentId: req.body.studentId,
                 club: req.body.club,
-                profile: req.file ? req.file.filename : null,
             }
         });
         res.status(200).json({
             msg: '회원 가입 성공',
-            redirect: '/main'
+            redirect: '메인 화면'
         });
     } catch (error) {
         console.error(error);
@@ -26,6 +25,7 @@ exports.join = async (req, res) => {
     }
 };
 
+// 로그아웃 로직
 exports.logout = (req, res) => {
     req.logout();
 }

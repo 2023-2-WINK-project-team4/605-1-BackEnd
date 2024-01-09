@@ -6,6 +6,8 @@ function getCurrentDate() {
     let day = now.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
+
+// 날짜별 회의 테이블 내역 조회
 exports.allTable = async (req, res) => {
     try {
         const selectedDate = req.query.date || getCurrentDate();
@@ -21,17 +23,19 @@ exports.allTable = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 }
+
+// 회의 테이블 예약 생성
 exports.addTable = async (req, res) => {
-    const { member, startTime, endTime,status,club } = req.body;
+    const { member, startTime, endTime,status, club } = req.body;
     try {
       const newMeeting = new Meeting({
-        member,
-        startTime : new Date(startTime),
-        endTime: new Date(endTime),
-        status,
-        club
-      });
-      await newMeeting.save();
+            member,
+            startTime : new Date(startTime),
+            endTime: new Date(endTime),
+            status,
+            club
+        });
+        await newMeeting.save();
       res.status(200).json({ message: 'success' });
     } catch (error) {
       res.status(400).json({ message: error.message});

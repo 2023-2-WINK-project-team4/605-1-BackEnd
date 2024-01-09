@@ -20,6 +20,7 @@ mongoose.connection.on('error', (error) => {
     console.error('몽고디비 연결 에러', error);
 });
 
+
 // 4. 초기 좌석 세팅
 mongoose.connection.once('open', async () => {
     try {

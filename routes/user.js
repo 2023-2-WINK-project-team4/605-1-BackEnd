@@ -1,15 +1,13 @@
 const express = require('express');
-const { editMember, getUser } = require('../controller/userController');
-const multer = require("multer");
+const { editMember, getUser, checkProfile} = require('../controller/userController');
+const { uploadS3 } = require('../util/S3/config')
 
 const router = express.Router();
 
-const upload = multer({dest: 'profiles/'})
-
-router.patch('/update', upload.single('profile'), editMember);
+router.route('/update')
+    .get(getUser)
+    .patch(checkProfile , uploadS3.single('profile'), editMember);
 
 router.get('/', getUser);
-
-router.get('/update', getUser);
 
 module.exports = router;

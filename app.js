@@ -6,17 +6,19 @@ const session = require('express-session')
 const path = require('path')
 const passport = require('passport')
 const passportConfig = require('./passport')
+// jwt 미적용
 // const { authenticate } = require('./util/auth/authMiddleware');
 
 
 require('dotenv').config();
 
 
-// router import
+// 라우터 import
 const userRouter = require("./routes/user");
 const authRouter = require("./routes/auth");
 const seatRouter = require('./routes/seat');
 const tableRouter = require('./routes/table')
+const reportRouter = require("./routes/report");
 
 
 // express 실행
@@ -26,6 +28,7 @@ app.set("port", process.env.PORT || 8080);
 
 passportConfig(); // passport 설정
 connect(); // mongoose 접속
+
 
 // 미들웨어 실행
 app.use(morgan("dev")); // morgan 실행
@@ -40,18 +43,18 @@ app.use(session({
     secret: process.env.COOKIE_SECRET,
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 
-// set Router
+
+// Router 연결
 app.use("/user", userRouter);
 app.use('/auth', authRouter);
-// app.use('/seat', authenticate, seatRouter);
+// app.use('/seat', authenticate, seatRouter); // jwt 사용
 app.use('/seat', seatRouter);
 app.use('/table',tableRouter)
-
+app.use('/report', reportRouter);
 
 
 // 에러 라우터 미들웨어

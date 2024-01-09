@@ -8,16 +8,16 @@ const member = new Schema({
         default: null
     },
     studentId: {
-        type: Number,
+        type: String,
         default: null,
     },
     club: {
         type: String,
-        default: null,
-        enum: ['wink', 'foscar']
+        default: 'WINK',
+        enum: ['WINK', 'FOSCAR']
     },
     profile: { // 사진 링크로 받기
-        type: Object,
+        type: String,
         default: null,
     },
     kakaoId: { // 로그인 시 회원 조회 기준 key

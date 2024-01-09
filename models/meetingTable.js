@@ -10,11 +10,11 @@ const meetingTable = new Schema({
     },
     startTime: {
         type: Date,
-        default: Date.now
+        default: null
     },
     endTime: {
         type: Date,
-        default: Date.now
+        default: null
     },
     status: {
         type: String,
