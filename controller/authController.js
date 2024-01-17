@@ -62,7 +62,7 @@ exports.loginCallback = async (req, res) => {
             })
         }
     } catch (e) {
-        res.status(500).json( { msg : error} );
+        res.status(500).json( { msg : e} );
     }
 }
 
