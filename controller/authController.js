@@ -28,26 +28,36 @@ exports.join = async (req, res) => {
 // 로그아웃 로직
 exports.logout = (req, res) => {
     req.logout();
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            res.status(500).send('Internal Server Error');
+        }
+    });
 }
 
 // 로그인 콜백 로직
 exports.loginCallback = async (req, res) => {
-    if (!req.user) {
-        res.status(400).json({
-            msg: "사용자가 존재하지 않음."
-        })
-    }
-    if (req.user.name === null) {
-        res.status(302).json({
-            msg: 'sign_up',
-            _id: req.user.id,
-        });
-    } else {
-        res.status(200).json({
-            _id: req.user.id,
-            club: req.user.club,
-            msg: 'success',
-        })
+    try {
+        if (!req.user) {
+            res.status(400).json({
+                msg: "사용자가 존재하지 않음."
+            })
+        }
+        if (req.user.name === null) {
+            res.status(302).json({
+                msg: 'sign_up',
+                _id: req.user.id,
+            });
+        } else {
+            res.status(200).json({
+                _id: req.user.id,
+                club: req.user.club,
+                msg: 'success',
+            })
+        }
+    } catch (e) {
+        res.status(500).json( { msg : error} );
     }
 }
 
