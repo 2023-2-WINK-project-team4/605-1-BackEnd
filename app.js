@@ -43,6 +43,7 @@ app.use(session({
     secret: process.env.COOKIE_SECRET,
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
