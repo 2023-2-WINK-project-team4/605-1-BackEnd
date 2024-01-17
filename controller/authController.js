@@ -41,35 +41,6 @@ exports.logout = (req, res) => {
     });
 }
 
-// 로그인 콜백 로직
-exports.loginCallback = async (req, res) => {
-    try {
-        const user = await req.user;
-
-        if (!user) {
-            res.status(400).json({
-                msg: "사용자가 존재하지 않음."
-            })
-        }
-        if (user.name === null) {
-            res.status(302).json({
-                msg: 'sign_up',
-                _id: user.id,
-            });
-        } else {
-            res.status(200).json({
-                _id: user.id,
-                club: user.club,
-                msg: 'success',
-            })
-        }
-    } catch (error) {
-        res.status(500).json({
-            message: error.message,
-        });
-    }
-}
-
 // const { generateToken } = require('../util/auth/jwtHelper'); // 경로에 주의하세요.
 
 // 사용자의 카카오 로그인 후 받은 kakaoId를 통해 member 식별 후 token 생성
