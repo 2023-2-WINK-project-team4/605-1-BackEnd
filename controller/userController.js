@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 const Member = require("../models/member");
+const Seat = require("../models/seat")
 
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -12,22 +13,26 @@ const s3 = new AWS.S3({
 exports.checkProfile = (req, res, next) => {
     const findOne = Member.findOne({ _id: req.user.id });
 
-    if (findOne.profile) {
-        const params = {
-            Bucket: 'wink-2023-2-bucket',
-            Key: findOne.profile.split('/').pop(), // 파일명만 추출
-        };
+    try {
+        if(findOne == null) res.status(500).send('Not exist Session')
+        else if (findOne.profile) { // 기존 프로필이 있는 경우 해당 user의 프로필 사진 삭제.
+            const params = {
+                Bucket: 'wink-2023-2-bucket',
+                Key: findOne.profile.split('/').pop(), // 파일명만 추출
+            };
 
-        s3.deleteObject(params, (err, data) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).send('Error deleting file from S3.');
-            }
-
+            s3.deleteObject(params, (err, data) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).send('Error deleting file from S3.');
+                }
+                next();
+            });
+        } else {
             next();
-        });
-    } else {
-        next();
+        }
+    } catch (e) {
+
     }
 }
 
@@ -50,12 +55,15 @@ exports.editMember = async (req, res, next) => {
 }
 
 // 회원 정보 조회
-exports.getUser = (req, res) => {
-    try{
-        const member = Member.findOne({ _id : req.user.id } );
-        console.log(member)
-        res.json(member)
-    } catch (error){
+exports.getUser = async (req, res) => {
+    try {
+        const member = await Member.findOne({_id: req.user.id});
+        const seat = await Seat.findOne({memberId: req.user.id});
+        res.json({
+            member,
+            seatNumber: seat.number
+        })
+    } catch (error) {
         console.log("접속 완료");
         console.error(error);
     }

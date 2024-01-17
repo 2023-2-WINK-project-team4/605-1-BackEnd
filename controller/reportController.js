@@ -9,8 +9,8 @@ exports.create = async (req, res) => {
             seatNumber: req.body.seatNumber,
             comment: req.body.comment
         })
-        res.status(200).json({'msg': "신고 완료"})
+        res.status(200).json({ msg : "신고 완료"})
     } catch (error) {
-        res.status(500).json( {message: error} );
+        res.status(500).json( { msg : error} );
     }
 }
