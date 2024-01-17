@@ -8,9 +8,7 @@ authRouter.get("/login", passport.authenticate("kakao"));
 
 // 로그인 콜백 요청
 authRouter.post(
-    "/login/callback", passport.authenticate('kakao', {
-        // failureRedirect: '/' // 로그인 실패 시 리다이렉트할 경로
-    }), async (req, res) => {
+    "/login/callback", async (req, res) => {
         try {
             const user = await req.user;
 
