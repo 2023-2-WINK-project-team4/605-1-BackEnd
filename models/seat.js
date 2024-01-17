@@ -10,7 +10,7 @@ const seat = new Schema({
     club: {
         type: String,
         required: true,
-        enum: ['wink', 'foscar']
+        enum: ['WINK', 'FOSCAR']
     },
     status: { // 좌석 이용 상태
         type: String,

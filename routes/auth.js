@@ -3,9 +3,6 @@ const passport = require('passport')
 const authRouter = express.Router()
 const { join, loginWithKakao, logout} = require('../controller/authController')
 
-
-let _id = null;
-
 // 로그인 인가 요청
 authRouter.get("/login", passport.authenticate("kakao"));
 
@@ -20,10 +17,9 @@ authRouter.get(
             })
         }
         if (req.user.name === null) {
-            _id = req.user.id;
             res.status(302).json({
                 msg: "sign_up",
-                redirect: "/auth/join",
+                _id: req.user.id,
             });
         } else {
             res.status(200).json({
@@ -40,20 +36,6 @@ authRouter.get('/logout', logout)
 
 // 회원 가입 라우터
 authRouter.route('/join')
-    .get((req, res) => {
-        try{
-            if(_id !== null) {
-                res.json({
-                    _id: _id
-                })
-            } else res.status(400).send("생성된 아이디가 없음")
-        } catch (error) {
-            console.error(error);
-            res.status(400).json({
-                message: error.message
-            });
-        }
-    })
     .post(join);
 
 // 서비스 로그인 라우터
