@@ -39,14 +39,14 @@ exports.loginCallback = async (req, res) => {
     }
     if (req.user.name === null) {
         res.status(302).json({
-            msg: "sign_up",
+            msg: 'sign_up',
             _id: req.user.id,
         });
     } else {
         res.status(200).json({
             _id: req.user.id,
             club: req.user.club,
-            msg: "success",
+            msg: 'success',
         })
     }
 }

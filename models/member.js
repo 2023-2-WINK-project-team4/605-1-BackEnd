@@ -13,7 +13,7 @@ const member = new Schema({
     },
     club: {
         type: String,
-        default: 'WINK',
+        default: null,
         enum: ['WINK', 'FOSCAR']
     },
     profile: { // 사진 링크로 받기
