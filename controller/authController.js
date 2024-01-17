@@ -27,7 +27,12 @@ exports.join = async (req, res) => {
 
 // 로그아웃 로직
 exports.logout = (req, res) => {
-    req.logout();
+    req.logout((err) => {
+        if (err) {
+            console.error('Error logout :', err);
+            res.status(500).send('Internal Server Error');
+        }
+    });
     req.session.destroy((err) => {
         if (err) {
             console.error('Error destroying session:', err);
