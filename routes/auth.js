@@ -9,9 +9,10 @@ authRouter.get("/login", passport.authenticate("kakao"));
 // 로그인 콜백 요청
 authRouter.get(
     "/login/callback", passport.authenticate('kakao', {
-        // failureRedirect: '/' // 로그인 실패 시 리다이렉트할 경로
+        failureRedirect: '/'
     }), async (req, res) => {
         try {
+
             const user = await req.user;
 
             if (!user) {
@@ -20,16 +21,18 @@ authRouter.get(
                 })
             }
             if (user.name === null) {
-                res.status(302).json({
-                    msg: 'sign_up',
-                    _id: user.id,
-                });
+                // res.status(302).json({
+                //     msg: 'sign_up',
+                //     _id: user.id,
+                // });
+                res.redirect(302, 'http://43.201.38.170:8080/auth/join')
             } else {
-                res.status(200).json({
-                    _id: user.id,
-                    club: user.club,
-                    msg: 'success',
-                })
+                // res.status(200).json({
+                //     _id: user.id,
+                //     club: user.club,
+                //     msg: 'success',
+                // })
+                res.redirect(302, 'http://43.201.38.170:8080/main');
             }
         } catch (error) {
             res.status(500).json({

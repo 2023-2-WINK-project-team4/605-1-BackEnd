@@ -19,6 +19,7 @@ const authRouter = require("./routes/auth");
 const seatRouter = require('./routes/seat');
 const tableRouter = require('./routes/table')
 const reportRouter = require("./routes/report");
+const kakaoRouter = require('./kakao/kakaoRouter')
 
 
 // express 실행
@@ -44,6 +45,7 @@ app.use(session({
   })
 );
 
+// passport-kakao 연결
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -56,6 +58,7 @@ app.use('/auth', authRouter);
 app.use('/seat', seatRouter);
 app.use('/table',tableRouter)
 app.use('/report', reportRouter);
+app.use('/kakao',kakaoRouter)
 
 
 // 에러 라우터 미들웨어

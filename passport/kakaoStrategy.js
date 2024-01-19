@@ -3,11 +3,10 @@ const KakaoStrategy = require('passport-kakao').Strategy;
 
 const Member = require('../models/member')
 
-
 module.exports = () => {
     passport.use(new KakaoStrategy({
         clientID: process.env.KAKAO_APIKEY, // 카카오에서 발급해주는 아이디
-        callbackURL: '/auth/login/callback', // 카카오 인증 결과 라우터 주소
+        callbackURL: process.env.REDIRECT_URL, // 카카오 인증 결과 라우터 주소
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             // 기존에 카카오를 통해 회원 가입한 사용자가 있는지 조회
