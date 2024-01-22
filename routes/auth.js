@@ -12,7 +12,6 @@ authRouter.get(
         failureRedirect: '/'
     }), async (req, res) => {
         try {
-
             const user = await req.user;
 
             if (!user) {
@@ -21,18 +20,12 @@ authRouter.get(
                 })
             }
             if (user.name === null) {
-                // res.status(302).json({
-                //     msg: 'sign_up',
-                //     _id: user.id,
-                // });
-                res.redirect(302, 'http://43.201.38.170:8080/auth/join')
+                // res.redirect(302, 'http://43.201.38.170:8080/auth/join')
+                // res.redirect(302, '/auth/join')
+                res.json({ msg: "sign_up" })
             } else {
-                // res.status(200).json({
-                //     _id: user.id,
-                //     club: user.club,
-                //     msg: 'success',
-                // })
-                res.redirect(302, 'http://43.201.38.170:8080/main');
+                // res.redirect(302, '/main');
+                res.json({msg: "success"})
             }
         } catch (error) {
             res.status(500).json({
@@ -47,6 +40,9 @@ authRouter.get('/logout', logout)
 
 // 회원 가입 라우터
 authRouter.route('/join')
+    .get((req, res) => {
+        res.send("김민선 바보")
+    })
     .post(join);
 
 // 서비스 로그인 라우터
