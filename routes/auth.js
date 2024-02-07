@@ -1,6 +1,7 @@
 const express = require('express')
 const passport = require('passport')
 const authRouter = express.Router()
+authRouter.use(cors());
 const { join, loginWithKakao, logout} = require('../controller/authController')
 
 // 로그인 인가 요청
@@ -15,20 +16,20 @@ authRouter.get(
             const user = await req.user;
 
             if (!user) {
-                res.status(400).json({
+                return res.status(400).json({
                     msg: "사용자가 존재하지 않음."
                 })
             }
             if (user.name === null) {
                 // res.redirect(302, 'http://43.201.38.170:8080/auth/join')
                 // res.redirect(302, '/auth/join')
-                res.json({ msg: "sign_up" })
+                return res.json({ msg: "sign_up" })
             } else {
                 // res.redirect(302, '/main');
-                res.json({msg: "success"})
+                return res.json({msg: "success"})
             }
         } catch (error) {
-            res.status(500).json({
+            return res.status(500).json({
                 message: error.message,
             });
         }

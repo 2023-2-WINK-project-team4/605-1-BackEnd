@@ -6,6 +6,7 @@ const session = require('express-session')
 const path = require('path')
 const passport = require('passport')
 const passportConfig = require('./passport')
+const cors = require('cors');
 // jwt 미적용
 // const { authenticate } = require('./util/auth/authMiddleware');
 
@@ -48,7 +49,6 @@ app.use(session({
 // passport-kakao 연결
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 
 // Router 연결
