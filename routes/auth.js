@@ -1,8 +1,11 @@
 const express = require('express')
 const passport = require('passport')
 const authRouter = express.Router()
-authRouter.use(cors());
+const cors = require('cors');
 const { join, loginWithKakao, logout} = require('../controller/authController')
+
+authRouter.use(cors());
+
 
 // 로그인 인가 요청
 authRouter.get("/login", passport.authenticate("kakao"));
