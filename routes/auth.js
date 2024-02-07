@@ -8,7 +8,7 @@ authRouter.get("/login", passport.authenticate("kakao"));
 
 // 로그인 콜백 요청
 authRouter.get(
-    "http://localhost:3000/loginCallback", passport.authenticate('kakao', {
+    "/login/callback", passport.authenticate('kakao', {
         failureRedirect: '/'
     }), async (req, res) => {
         try {
