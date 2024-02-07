@@ -8,7 +8,7 @@ authRouter.get("/login", passport.authenticate("kakao"));
 
 // 로그인 콜백 요청
 authRouter.get(
-    "/login/callback", passport.authenticate('kakao', {
+    "http://localhost:3000/loginCallback", passport.authenticate('kakao', {
         failureRedirect: '/'
     }), async (req, res) => {
         try {
@@ -40,9 +40,6 @@ authRouter.get('/logout', logout)
 
 // 회원 가입 라우터
 authRouter.route('/join')
-    .get((req, res) => {
-        res.send("김민선 바보")
-    })
     .post(join);
 
 // 서비스 로그인 라우터
