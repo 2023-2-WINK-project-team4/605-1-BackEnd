@@ -22,15 +22,11 @@ authRouter.get(
             }
             if (user.name === null) {
                 // 세션 생성
-                req.session.user = {
-                    id: user.id,
-                }
+                req.session.id = user._id;
                 return res.json({ msg: "sign_up" })
             } else {
                 // 세션 생성
-                req.session.user = {
-                    id: user.id,
-                }
+                req.session.id = user._id;
                 return res.json({msg: "success"})
             }
         } catch (error) {
@@ -47,11 +43,11 @@ authRouter.get('/logout', logout)
 // 회원 가입 라우터
 authRouter.post('/join', async (req, res) => {
     try {
-        const user = req.session.user;
-        console.log(user);
+
+        console.log(req.session.id);
 
         // 받은 값으로 회원 가입 완료.
-        await Member.updateOne({ _id: user.id }, {
+        await Member.updateOne({ _id: req.session.id }, {
             $set: {
                 name: req.body.name,
                 studentId: req.body.studentId,
