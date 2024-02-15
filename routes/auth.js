@@ -22,11 +22,11 @@ authRouter.get(
             }
             if (user.name === null) {
                 // 세션 생성
-                req.session.id = user._id;
+                req.session.kakaoId = user.kakaoId;
                 return res.json({ msg: "sign_up" })
             } else {
                 // 세션 생성
-                req.session.id = user._id;
+                req.session.kakaoId = user.kakaoId;
                 return res.json({msg: "success"})
             }
         } catch (error) {
@@ -44,10 +44,11 @@ authRouter.get('/logout', logout)
 authRouter.post('/join', async (req, res) => {
     try {
 
-        console.log(req.session.id);
+        console.log(req.session.kakaoId);
+        console.log(req.user.kakaoId);
 
         // 받은 값으로 회원 가입 완료.
-        await Member.updateOne({ _id: req.session.id }, {
+        await Member.updateOne({ kakaoId: req.session.kakaoId }, {
             $set: {
                 name: req.body.name,
                 studentId: req.body.studentId,
