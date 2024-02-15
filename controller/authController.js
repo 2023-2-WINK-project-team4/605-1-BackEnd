@@ -5,7 +5,7 @@ const Member = require('../models/member');
 exports.join = async (req, res) => {
     try {
         // 받은 값으로 회원 가입 완료.
-        await Member.updateOne({ _id: req.user.id }, {
+        await Member.updateOne({ _id: req.user._id }, {
             $set: {
                 name: req.body.name,
                 studentId: req.body.studentId,
