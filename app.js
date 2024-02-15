@@ -3,7 +3,6 @@ const connect = require('./models');
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
-const path = require('path')
 const passport = require('passport')
 const passportConfig = require('./passport')
 const cors = require('cors');
@@ -43,7 +42,6 @@ connect(); // mongoose 접속
 
 // 미들웨어 실행
 app.use(morgan("dev")); // morgan 실행
-app.use(express.static(path.join(__dirname, "public"))); // 정적 파일 연결
 app.use(express.json()); // json
 app.use(express.urlencoded({ extended: true }));
 
