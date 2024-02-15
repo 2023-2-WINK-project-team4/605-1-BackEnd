@@ -40,14 +40,14 @@ authRouter.get(
 authRouter.get('/logout', logout)
 
 // 회원 가입 라우터
-authRouter.post('/join', passport.authenticate('kakao'), async (req, res) => {
+authRouter.post('/join', async (req, res) => {
     try {
-        // const value = await req.session.kakaoId
-        //
-        // console.log(`세션 : ${await req.session.kakaoId}`)
+        const value = await req.session.kakaoId
+        console.log(`req : ${req}`)
+        console.log(`세션 : ${await req.session.kakaoId}`)
 
         // 받은 값으로 회원 가입 완료.
-        await Member.updateOne({ kakaoId: req.user.kakaoId }, {
+        await Member.updateOne({ kakaoId: value }, {
             $set: {
                 name: req.body.name,
                 studentId: req.body.studentId,
