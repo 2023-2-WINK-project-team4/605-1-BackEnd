@@ -2,29 +2,7 @@ const Member = require('../models/member');
 
 
 // 회원 가입 로직
-exports.join = async (req, res) => {
-    try {
-        const user = await req.user;
-        // 받은 값으로 회원 가입 완료.
-        await Member.updateOne({ _id: user.id }, {
-            $set: {
-                name: req.body.name,
-                studentId: req.body.studentId,
-                club: req.body.club,
-            }
-        });
-        res.status(200).json({
-            msg: '회원 가입 성공',
-            redirect: '메인 화면'
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(400).json({
-            message: error.message,
-            redirect: '첫 화면'
-        });
-    }
-};
+exports.join =
 
 // 로그아웃 로직
 exports.logout = (req, res) => {

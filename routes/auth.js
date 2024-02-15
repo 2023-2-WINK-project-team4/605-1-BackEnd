@@ -3,6 +3,7 @@ const passport = require('passport')
 const authRouter = express.Router()
 const cors = require('cors');
 const { join, loginWithKakao, logout} = require('../controller/authController')
+const Member = require("../models/member");
 
 authRouter.use(cors());
 
@@ -38,8 +39,29 @@ authRouter.get(
 authRouter.get('/logout', logout)
 
 // 회원 가입 라우터
-authRouter.route('/join')
-    .post(passport.authenticate('kakao'), join);
+authRouter.post('/join', passport.authenticate('kakao'), async (req, res) => {
+    try {
+        const user = await req.user;
+        // 받은 값으로 회원 가입 완료.
+        await Member.updateOne({ _id: user.id }, {
+            $set: {
+                name: req.body.name,
+                studentId: req.body.studentId,
+                club: req.body.club,
+            }
+        });
+        res.status(200).json({
+            msg: '회원 가입 성공',
+            redirect: '메인 화면'
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({
+            message: error.message,
+            redirect: '첫 화면'
+        });
+    }
+});
 
 // 서비스 로그인 라우터
 // authRouter.get('/login/service/:kakaoId', loginWithKakao);
