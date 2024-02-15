@@ -42,9 +42,9 @@ authRouter.get('/logout', logout)
 // 회원 가입 라우터
 authRouter.post('/join', async (req, res) => {
     try {
-        const value = await req.session.kakaoId
-        const val2 = await req
-        const val3 = await req.session
+        const value = JSON.stringfy(req.session.kakaoId)
+        const val2 = JSON.stringfy(req)
+        const val3 = JSON.stringfy(req.session)
 
         console.log(`req : ${val2}`)
         console.log(`req.session.kakaoId: ${value}`)
