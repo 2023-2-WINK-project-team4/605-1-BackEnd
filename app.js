@@ -27,6 +27,14 @@ const app = express();
 
 app.set("port", process.env.PORT || 8080);
 
+app.use(session({
+        cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }, // 세션 만료 기간 - 일주일
+        resave: false,
+        saveUninitialized: true,
+        secret: process.env.COOKIE_SECRET,
+    })
+);
+
 passportConfig(); // passport 설정
 connect(); // mongoose 접속
 
@@ -37,13 +45,7 @@ app.use(express.static(path.join(__dirname, "public"))); // 정적 파일 연결
 app.use(express.json()); // json
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(session({
-    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }, // 세션 만료 기간 - 일주일
-    resave: false,
-    saveUninitialized: true,
-    secret: process.env.COOKIE_SECRET,
-  })
-);
+
 
 // passport-kakao 연결
 app.use(passport.initialize());
