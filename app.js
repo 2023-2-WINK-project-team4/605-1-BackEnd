@@ -49,6 +49,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(passport.authenticate('kakao'));
 
 // Router 연결
 app.use("/user", userRouter);
