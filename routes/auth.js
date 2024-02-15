@@ -44,8 +44,8 @@ authRouter.get('/logout', logout)
 authRouter.post('/join', async (req, res) => {
     try {
 
-        console.log(req.session.kakaoId);
-        console.log(req.user.kakaoId);
+        console.log(`세션 : ${req.session.kakaoId}`)
+        console.log(`req.user: ${req.user.kakaoId}`)
 
         // 받은 값으로 회원 가입 완료.
         await Member.updateOne({ kakaoId: req.session.kakaoId }, {
