@@ -27,6 +27,8 @@ const app = express();
 
 app.set("port", process.env.PORT || 8080);
 
+// 세션 사용을 위해 맨 앞으로 가져와야 함.
+app.use(cookieParser({secret: process.env.COOKIE_SECRET}));
 app.use(session({
         cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }, // 세션 만료 기간 - 일주일
         resave: false,
@@ -44,7 +46,6 @@ app.use(morgan("dev")); // morgan 실행
 app.use(express.static(path.join(__dirname, "public"))); // 정적 파일 연결
 app.use(express.json()); // json
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(process.env.COOKIE_SECRET));
 
 
 // passport-kakao 연결
