@@ -44,8 +44,11 @@ authRouter.post('/join', async (req, res) => {
     try {
         const value = await req.session.kakaoId
         const val2 = await req
+        const val3 = await req.session
+
         console.log(`req : ${val2}`)
-        console.log(`세션 : ${value}`)
+        console.log(`req.session.kakaoId: ${value}`)
+        console.log(`req.session: ${val3}`)
 
         // 받은 값으로 회원 가입 완료.
         await Member.updateOne({ kakaoId: value }, {
