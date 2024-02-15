@@ -10,11 +10,13 @@ const s3 = new AWS.S3({
 
 
 // 이전 프로필 사진 체크 후 삭제
-exports.checkProfile = (req, res, next) => {
-    const findOne = Member.findOne({ _id: req.user.id });
+exports.checkProfile = async (req, res, next) => {
+    const user = await req.user;
+
+    const findOne = Member.findOne({_id: user.id});
 
     try {
-        if(findOne == null) res.status(500).send('Not exist Session')
+        if (findOne == null) res.status(500).send('Not exist Session')
         else if (findOne.profile) { // 기존 프로필이 있는 경우 해당 user의 프로필 사진 삭제.
             const params = {
                 Bucket: 'wink-2023-2-bucket',
@@ -39,7 +41,9 @@ exports.checkProfile = (req, res, next) => {
 // 회원 정보 수정
 exports.editMember = async (req, res, next) => {
     try {
-        const member = await Member.updateOne({ _id: req.user.id },
+        const user = await req.user;
+
+        const member = await Member.updateOne({ _id: user.id },
             {'$set':
                 {
                     name: req.body.name,
@@ -57,8 +61,10 @@ exports.editMember = async (req, res, next) => {
 // 회원 정보 조회
 exports.getUser = async (req, res) => {
     try {
-        const member = await Member.findOne({_id: req.user.id});
-        const seat = await Seat.findOne({memberId: req.user.id});
+        const user = await req.user;
+
+        const member = await Member.findOne({_id: user.id});
+        const seat = await Seat.findOne({memberId: user.id});
         res.json({
             member,
             seatNumber: seat.number

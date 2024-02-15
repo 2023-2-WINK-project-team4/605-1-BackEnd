@@ -3,8 +3,10 @@ const Report = require('../models/report');
 // 신고 데이터 입력.
 exports.create = async (req, res) => {
     try {
+        const user = await req.user;
+
         const report = await Report.create({
-            reporter: req.user.name,
+            reporter: user.name,
             reported: req.body.name,
             seatNumber: req.body.seatNumber,
             comment: req.body.comment
