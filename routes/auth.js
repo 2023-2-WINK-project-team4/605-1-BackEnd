@@ -38,8 +38,8 @@ authRouter.get(
 authRouter.get('/logout', logout)
 
 // 회원 가입 라우터
-authRouter.route('/join', passport.authenticate('kakao'))
-    .post(join);
+authRouter.route('/join')
+    .post(passport.authenticate('kakao'), join);
 
 // 서비스 로그인 라우터
 // authRouter.get('/login/service/:kakaoId', loginWithKakao);
