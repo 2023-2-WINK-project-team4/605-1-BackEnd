@@ -43,12 +43,12 @@ authRouter.get('/logout', logout)
 // 회원 가입 라우터
 authRouter.post('/join', async (req, res) => {
     try {
+        const value = await req.session.kakaoId
 
-        console.log(`세션 : ${req.session.kakaoId}`)
-        console.log(`req.user: ${req.user.kakaoId}`)
+        console.log(`세션 : ${value}`)
 
         // 받은 값으로 회원 가입 완료.
-        await Member.updateOne({ kakaoId: req.session.kakaoId }, {
+        await Member.updateOne({ kakaoId: value }, {
             $set: {
                 name: req.body.name,
                 studentId: req.body.studentId,
