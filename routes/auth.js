@@ -2,7 +2,7 @@ const express = require('express')
 const passport = require('passport')
 const authRouter = express.Router()
 const cors = require('cors');
-const { join, loginWithKakao, logout} = require('../controller/authController')
+const { loginWithKakao, logout} = require('../controller/authController')
 const Member = require("../models/member");
 
 
@@ -21,8 +21,16 @@ authRouter.get(
                 })
             }
             if (user.name === null) {
+                // 세션 생성
+                req.session.user = {
+                    id: user.id,
+                }
                 return res.json({ msg: "sign_up" })
             } else {
+                // 세션 생성
+                req.session.user = {
+                    id: user.id,
+                }
                 return res.json({msg: "success"})
             }
         } catch (error) {
@@ -39,7 +47,8 @@ authRouter.get('/logout', logout)
 // 회원 가입 라우터
 authRouter.post('/join', async (req, res) => {
     try {
-        const user = req.user;
+        const user = req.session.user;
+        console.log(user);
 
         // 받은 값으로 회원 가입 완료.
         await Member.updateOne({ _id: user.id }, {

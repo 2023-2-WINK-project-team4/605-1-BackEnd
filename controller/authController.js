@@ -1,9 +1,5 @@
 const Member = require('../models/member');
 
-
-// 회원 가입 로직
-exports.join =
-
 // 로그아웃 로직
 exports.logout = (req, res) => {
     req.logout((err) => {
