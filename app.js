@@ -51,7 +51,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // cors
-app.use(cors({ credentials: true, }));
+app.use(cors({ credentials: true, origin: true}));
 
 // Router 연결
 app.use("/user", userRouter);
