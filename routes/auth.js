@@ -37,7 +37,7 @@ authRouter.get(
 authRouter.get('/logout', logout)
 
 // 회원 가입 라우터
-authRouter.post('/join', passport.authenticate('kakao'), async (req, res) => {
+authRouter.post('/join', async (req, res) => {
     try {
         const user = req.user;
 
