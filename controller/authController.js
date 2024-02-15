@@ -4,8 +4,10 @@ const Member = require('../models/member');
 // 회원 가입 로직
 exports.join = async (req, res) => {
     try {
+        console.log(await req.user);
+
         // 받은 값으로 회원 가입 완료.
-        await Member.updateOne({ _id: req.user._id }, {
+        await Member.updateOne({ _id: req.user.id }, {
             $set: {
                 name: req.body.name,
                 studentId: req.body.studentId,

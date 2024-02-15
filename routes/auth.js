@@ -22,11 +22,8 @@ authRouter.get(
                 })
             }
             if (user.name === null) {
-                // res.redirect(302, 'http://43.201.38.170:8080/auth/join')
-                // res.redirect(302, '/auth/join')
                 return res.json({ msg: "sign_up" })
             } else {
-                // res.redirect(302, '/main');
                 return res.json({msg: "success"})
             }
         } catch (error) {
