@@ -21,11 +21,11 @@ authRouter.get(
             }
             if (user.name === null) {
                 // 세션 생성
-                req.session.kakaoId = user.kakaoId;
+                req.session.user = {kakaoId: "aaaa"};
                 return res.json({ msg: "sign_up" })
             } else {
                 // 세션 생성
-                req.session.kakaoId = user.kakaoId;
+                req.session.user = {kakaoId: "aaaa"};
                 return res.json({ msg: "success" })
             }
         } catch (error) {
@@ -42,16 +42,8 @@ authRouter.get('/logout', logout)
 // 회원 가입 라우터
 authRouter.post('/join', async (req, res) => {
     try {
-        // const value = JSON.stringify(req.session.kakaoId)
-        const val2 = JSON.stringify(req)
-        const val3 = JSON.stringify(req.session)
-
-        console.log(`req : ${val2}`)
-        // console.log(`req.session.kakaoId: ${value}`)
-        console.log(`req.session: ${val3}`)
-
         // 받은 값으로 회원 가입 완료.
-        await Member.updateOne({ kakaoId: req.session.kakaoId }, {
+        await Member.updateOne({ kakaoId: req.session.user.kakaoId }, {
             $set: {
                 name: req.body.name,
                 studentId: req.body.studentId,
