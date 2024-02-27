@@ -5,10 +5,10 @@ const { uploadS3 } = require('../util/S3/config')
 
 const router = express.Router();
 
-router.route('/update', passport.authenticate('kakao'))
+router.route('/update')
     .get(getUser)
     .patch(checkProfile , uploadS3.single('profile'), editMember);
 
-router.get('/', passport.authenticate('kakao'), getUser);
+router.get('/', getUser);
 
 module.exports = router;

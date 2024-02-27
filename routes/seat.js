@@ -4,15 +4,15 @@ const router = express.Router();
 const {checkMySeat, rentSeat, returnSeat, getSeatsStatus} = require('../controller/seatController');
 
 // 내 좌석 대여 조회
-router.get('/my-seat', passport.authenticate('kakao'), checkMySeat);
+router.get('/my-seat', checkMySeat);
 
 // 좌석 대여
-router.patch('/rent', passport.authenticate('kakao'), rentSeat);
+router.patch('/rent', rentSeat);
 
 // 좌석 반납
-router.patch('/return', passport.authenticate('kakao'), returnSeat); // POST 또는 PUT 메서드 사용 가능
+router.patch('/return', returnSeat); // POST 또는 PUT 메서드 사용 가능
 
 // 좌석 조회
-router.get('/:club', passport.authenticate('kakao'), getSeatsStatus);
+router.get('/:club', getSeatsStatus);
 
 module.exports = router;

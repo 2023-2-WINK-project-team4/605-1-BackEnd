@@ -3,6 +3,8 @@ const passport = require('passport')
 const authRouter = express.Router()
 const { loginWithKakao, logout} = require('../controller/authController')
 const Member = require("../models/member");
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 
 // 로그인 인가 요청
@@ -20,12 +22,16 @@ authRouter.get(
                 })
             }
             if (user.name === null) {
-                // 세션 생성
-                req.session.user = {kakaoId: "aaaa"};
-                return res.json({ msg: "sign_up" })
+                return res.json({ msg: "sign_up", id: user.id })
             } else {
-                // 세션 생성
-                req.session.user = {kakaoId: "aaaa"};
+                // req.login(user, { session: false }, err => {
+                //     if (err) {
+                //         res.send(err);
+                //     }
+                //     const token = jwt.sign({ id: user.id, club: user.club }, process.env.JWT_SECRET);
+                //     return res.status(200).json({ userToken: token, success: true });
+                // });
+
                 return res.json({ msg: "success" })
             }
         } catch (error) {
