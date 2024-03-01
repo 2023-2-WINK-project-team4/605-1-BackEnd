@@ -4,17 +4,35 @@ const authRouter = express.Router()
 const { loginWithKakao, logout} = require('../controller/authController')
 const Member = require("../models/member");
 const jwt = require('jsonwebtoken')
-const {generateToken} = require("../util/auth/jwtHelper");
+const {generateToken, verifyToken} = require("../util/auth/jwtHelper");
 const {authenticate} = require("../util/auth/authMiddleware");
 require('dotenv').config()
 
 
 // 로그인 인가 요청
-authRouter.get("/login", passport.authenticate("kakao"));
+authRouter.get("/login", (req, res, next) => {
+    try {
+        const token = req.headers.authorization;
+        req.token = verifyToken(token);
+
+        return res.status(200).json({
+            msg: "success",
+            token : token
+        })
+    } catch(error) {
+        if (error.name === 'TokenExpireError') {
+            return next();
+        }
+        return res.status(401).json({
+            code: 401,
+            message: '유효하지 않은 토큰입니다.'
+        });
+    }
+}, passport.authenticate("kakao"));
 
 // 로그인 콜백 요청
 authRouter.get(
-    "/login/callback", authenticate, passport.authenticate('kakao'), (req, res, next) => {
+    "/login/callback", passport.authenticate('kakao'), (req, res, next) => {
         try {
             const user = req.user;
 
@@ -23,6 +41,10 @@ authRouter.get(
                     msg: "사용자가 존재하지 않음."
                 })
             }
+            if(req.token === null) {
+
+            }
+
 
             if (user.name === null) {
                 // 회원가입 페이지
