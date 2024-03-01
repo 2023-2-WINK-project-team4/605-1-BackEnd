@@ -35,10 +35,6 @@ authRouter.get(
                     msg: "사용자가 존재하지 않음."
                 })
             }
-            if(req.token === null) {
-
-            }
-
 
             if (user.name === null) {
                 // 회원가입 페이지
@@ -47,23 +43,18 @@ authRouter.get(
                     kakaoId: user.kakaoId
                 })
             } else {
-                req.login(user, err => {
-                    if (err) {
-                        res.send(err);
-                    }
-                    const token = generateToken(user);
-                    /*
-                    * token = {
-                    *   kakaoId: 1234,
-                    *   club : wink,
-                    *   name : 류건
-                    * }
-                    */
-                    return res.status(200).json({
-                        msg: "success",
-                        token : token
-                    })
-                });
+                const token = generateToken(user);
+                /*
+                * token = {
+                *   kakaoId: 1234,
+                *   club : wink,
+                *   name : 류건
+                * }
+                */
+                return res.status(200).json({
+                    msg: "success",
+                    token : token
+                })
             }
         } catch (error) {
             console.log(error)
