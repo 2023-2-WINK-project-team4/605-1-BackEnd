@@ -5,14 +5,22 @@ const { verifyToken } = require('./jwtHelper');
 
 const authenticate = (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const decoded = verifyToken(token);
+        const token = req.headers.authorization;
+        req.token = verifyToken(token);
         // JWT 토큰 생성 시 사용자의 ID를 토큰의 payload에 포함시켰기 때문에
         // 검증할 때 해당 ID를 다시 추출할 수 있음
-        req.memberId = decoded.id;
-        next();
+        return next();
     } catch (error) {
-        res.status(401).json({ message: '인증 실패' });
+        if (error.name === 'TokenExpireError') {
+            return res.status(419).json({
+                code: 419,
+                message: '토큰이 만료되었습니다.'
+            });
+        }
+        return res.status(401).json({
+            code: 401,
+            message: '유효하지 않은 토큰입니다.'
+        });
     }
 };
 

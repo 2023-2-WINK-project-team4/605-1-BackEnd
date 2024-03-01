@@ -6,8 +6,7 @@ const session = require('express-session')
 const passport = require('passport')
 const passportConfig = require('./passport')
 const cors = require('cors');
-// jwt 미적용
-// const { authenticate } = require('./util/auth/authMiddleware');
+const { authenticate } = require('./util/auth/authMiddleware');
 
 
 require('dotenv').config();
@@ -54,12 +53,11 @@ app.use(passport.session());
 app.use(cors({ credentials: true, origin: true}));
 
 // Router 연결
-app.use("/user", userRouter);
+app.use("/user", authenticate, userRouter);
 app.use('/auth', authRouter);
-// app.use('/seat', authenticate, seatRouter); // jwt 사용
-app.use('/seat', seatRouter);
-app.use('/table',tableRouter)
-app.use('/report', reportRouter);
+app.use('/seat', authenticate, seatRouter); // jwt 사용
+app.use('/table', tableRouter)
+app.use('/report', authenticate, reportRouter);
 
 
 // 에러 라우터 미들웨어

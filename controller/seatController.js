@@ -5,9 +5,9 @@ const Member = require('../models/member');
 // 내 좌석 대여 조회
 exports.checkMySeat = async (req, res) => {
     try {
-        const user = await req.user;
+        const user = await req.token;
 
-        const member = await Member.findOne({ _id : user.id });
+        const member = await Member.findOne({ kakaoId : user.kakaoId });
         if (!member) {
             res.status(400).json({
                 msg: "세션이 종료됐거나 사용자가 올바르지 않음."
@@ -37,11 +37,11 @@ exports.checkMySeat = async (req, res) => {
 // 좌석 대여
 exports.rentSeat = async (req, res) => {
     const { seatNumber } = req.body;
-    const user = await req.user;
+    const user = await req.token;
 
     try {
         // 현재 인증된 사용자의 정보를 조회
-        const member = await Member.findOne({ _id : user.id });
+        const member = await Member.findOne({ kakaoId : user.kakaoId });
         if (!member) {
             return res.status(404).json({ message: '회원을 찾을 수 없습니다.' });
         }
@@ -72,11 +72,10 @@ exports.rentSeat = async (req, res) => {
 // 좌석 반납
 exports.returnSeat = async (req, res) => {
     try {
-
-        const user = await req.user;
+        const user = await req.token;
 
         // 현재 인증된 사용자의 정보를 조회
-        const member = await Member.findOne({ _id : user.id });
+        const member = await Member.findOne({ kakaoId : user.kakaoId });
         if (!member) {
             return res.status(404).json({ message: '회원을 찾을 수 없습니다.' });
         }
@@ -92,7 +91,7 @@ exports.returnSeat = async (req, res) => {
             return res.status(400).json({ message: '이미 반납된 좌석입니다.' });
         }
 
-        const seatHistory = new SeatHistory({
+        await SeatHistory.create({
             memberName : member.name,
             studentId : member.studentId,
             club : member.club,
@@ -101,8 +100,6 @@ exports.returnSeat = async (req, res) => {
             seatEndTime : Date.now(),
             memberId : member.id
         });
-
-        await seatHistory.save();
 
         // 좌석 상태 업데이트
         seat.status = 'notUsed';

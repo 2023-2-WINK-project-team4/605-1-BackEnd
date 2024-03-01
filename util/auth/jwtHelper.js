@@ -3,7 +3,7 @@ require('dotenv').config();
 
 // 토큰 생성
 const generateToken = (member) => {
-    return jwt.sign({ id: member._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
+    return jwt.sign({ kakaoId: member.kakaoId, club: member.club, name: member.name}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
 };
 
 // 토큰 유효성 검증

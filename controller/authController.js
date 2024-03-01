@@ -1,7 +1,7 @@
 const Member = require('../models/member');
 
 // 로그아웃 로직
-exports.logout = (req, res) => {
+exports.logout = (req, res, next) => {
     req.logout((err) => {
         if (err) {
             console.error('Error logout :', err);

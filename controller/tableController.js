@@ -16,7 +16,10 @@ exports.allTable = async (req, res) => {
         const endOfDay = new Date(selectedDate);
         endOfDay.setUTCHours(23, 59, 59, 999);
         const meetings = await Meeting.find({
-        startTime: {$gte: startOfDay, $lt: endOfDay }
+            startTime: {
+                $gte: startOfDay,
+                $lt: endOfDay
+            }
         }).sort({ startTime: 1 });
         res.json(meetings);
     } catch (error) {
