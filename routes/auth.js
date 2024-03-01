@@ -5,6 +5,7 @@ const { loginWithKakao, logout} = require('../controller/authController')
 const Member = require("../models/member");
 const jwt = require('jsonwebtoken')
 const {generateToken} = require("../util/auth/jwtHelper");
+const {authenticate} = require("../util/auth/authMiddleware");
 require('dotenv').config()
 
 
@@ -13,7 +14,7 @@ authRouter.get("/login", passport.authenticate("kakao"));
 
 // 로그인 콜백 요청
 authRouter.get(
-    "/login/callback", passport.authenticate('kakao'), (req, res, next) => {
+    "/login/callback", authenticate, passport.authenticate('kakao'), (req, res, next) => {
         try {
             const user = req.user;
 
