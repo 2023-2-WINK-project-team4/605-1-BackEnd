@@ -42,7 +42,6 @@ mongoose.connection.once('open', async () => {
                 await seat.save();
             }
         }
-
         console.log('초기 좌석 생성 완료');
     } catch (error) {
         console.error('초기 좌석 생성 중 에러 발생:', error);

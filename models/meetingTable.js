@@ -24,7 +24,7 @@ const meetingTable = new Schema({
 
     club: {
         type: String,
-        enum: ['WINK', 'FOSCAR'],
+        enum: ['wink', 'foscar'],
         required: true,
     }
 })

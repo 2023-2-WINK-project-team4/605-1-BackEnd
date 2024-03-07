@@ -13,10 +13,10 @@ const s3 = new AWS.S3({
 exports.checkProfile = async (req, res, next) => {
     const user = await req.token;
 
-    const findOne = Member.findOne({kakaoId: user.kakaoId});
+    const findOne = Member.findOne({ kakaoId: user.kakaoId});
 
     try {
-        if (findOne == null) res.status(500).send('Not exist Session')
+        if (findOne == null) res.status(401).send('Not exist token')
         else if (findOne.profile !== null) { // 기존 프로필이 있는 경우 해당 user의 프로필 사진 삭제.
             const params = {
                 Bucket: 'wink-2023-2-bucket',
@@ -34,7 +34,8 @@ exports.checkProfile = async (req, res, next) => {
             next();
         }
     } catch (e) {
-
+        console.log(e);
+        next(e);
     }
 }
 
@@ -43,9 +44,8 @@ exports.editMember = async (req, res, next) => {
     try {
         const user = await req.token;
 
-        const member = await Member.updateOne({ kakaoId: user.kakaoId },
-            {'$set':
-                {
+        const member = await Member.updateOne({ kakaoId: user.kakaoId }, {
+            $set: {
                     name: req.body.name,
                     profile: req.file.location,
                     club: req.body.club,
@@ -61,14 +61,12 @@ exports.editMember = async (req, res, next) => {
 // 회원 정보 조회
 exports.getUser = async (req, res) => {
     try {
-        const user = await req.token;
-
-        const member = await Member.findOne({ kakaoId: user.kakaoId });
-        const seat = await Seat.findOne({ memberId: member.id });
+        const member = await Member.findOne({ kakaoId: req.token.kakaoId });
+        const seat = await Seat.findOne({ memberId: member._id });
 
         res.json({
             member,
-            seatNumber: seat.number
+            seatNumber: seat ? seat.number : null
         })
     } catch (error) {
         console.log("접속 완료");
