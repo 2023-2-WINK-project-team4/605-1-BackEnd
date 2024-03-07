@@ -29,15 +29,15 @@ exports.allTable = async (req, res) => {
 
 // 회의 테이블 예약 생성
 exports.addTable = async (req, res) => {
-    const { member, startTime, endTime,status, club } = req.body;
+    const { member, startTime, endTime, club } = req.body;
     try {
-      const newMeeting = new Meeting({
+        const newMeeting = new Meeting({
             member,
             startTime : new Date(startTime),
             endTime: new Date(endTime),
-            status,
             club
         });
+
         await newMeeting.save();
       res.status(200).json({ message: 'success' });
     } catch (error) {
