@@ -55,7 +55,7 @@ app.use(cors({ credentials: true, origin: true}));
 // Router 연결
 app.use("/user", authenticate, userRouter);
 app.use('/auth', authRouter);
-app.use('/seat', authenticate, seatRouter); // jwt 사용
+app.use('/seat', seatRouter); // jwt 사용
 app.use('/table', tableRouter)
 app.use('/report', authenticate, reportRouter);
 
