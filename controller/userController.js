@@ -45,7 +45,7 @@ exports.editMember = async (req, res, next) => {
         const user = await req.token;
 
         const member = await Member.updateOne({ kakaoId: user.kakaoId }, {
-            $set: {
+               $set: {
                     name: req.body.name,
                     profile: req.file.location,
                     club: req.body.club,

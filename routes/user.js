@@ -1,5 +1,4 @@
 const express = require('express');
-const passport = require('passport')
 const { editMember, getUser, checkProfile} = require('../controller/userController');
 const { uploadS3 } = require('../util/S3/config')
 
