@@ -5,6 +5,6 @@ const {authenticate} = require("../util/auth/authMiddleware");
 const reportRouter = express.Router();
 
 // 신고하기
-reportRouter.post('/', create);
+reportRouter.post('/', authenticate, create);
 
 module.exports = reportRouter;

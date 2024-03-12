@@ -68,16 +68,14 @@ exports.rentSeat = async (req, res) => {
 // 좌석 반납
 exports.returnSeat = async (req, res) => {
     try {
-        const user = await req.token;
-
         // 현재 인증된 사용자의 정보를 조회
-        const member = await Member.findOne({ kakaoId : user.kakaoId });
+        const member = await Member.findOne({ kakaoId : req.token.kakaoId });
         if (!member) {
             return res.status(404).json({ message: '회원을 찾을 수 없습니다.' });
         }
 
         // 해당 좌석을 조회
-        const seat = await Seat.findOne({ memberId: member.id });
+        const seat = await Seat.findOne({ memberId: member._id });
         if (!seat) {
             return res.status(404).json({ message: '좌석을 찾을 수 없습니다.' });
         }
@@ -105,6 +103,7 @@ exports.returnSeat = async (req, res) => {
 
         res.status(200).json({ message: '좌석 반납 완료' });
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: '서버 오류' });
     }
 };
@@ -118,7 +117,7 @@ exports.getSeatsStatus = async (req, res) => {
         const seats = await Seat.find({ club }).sort({ number: 1 });
         const seatsStatus = await Promise.all(seats.map(async (seat) => {
             // 각 좌석에 대해 memberId로 member 조회
-            const member = await Member.findById(seat.memberId);
+            const member = await Member.findOne({ _id : seat.memberId });
             return {
                 seatNumber: seat.number,
                 seatStatus: seat.status,
@@ -131,6 +130,7 @@ exports.getSeatsStatus = async (req, res) => {
 
         res.json(seatsStatus);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: '서버 오류' });
     }
 };

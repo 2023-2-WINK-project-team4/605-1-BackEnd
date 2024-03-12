@@ -11,12 +11,10 @@ const s3 = new AWS.S3({
 
 // 이전 프로필 사진 체크 후 삭제
 exports.checkProfile = async (req, res, next) => {
-    const user = await req.token;
-
-    const findOne = Member.findOne({ kakaoId: user.kakaoId});
+    const findOne = Member.findOne({ kakaoId: req.token.kakaoId });
 
     try {
-        if (findOne == null) res.status(401).send('Not exist token')
+        if (findOne === null) res.status(401).send('Not exist token')
         else if (findOne.profile !== null) { // 기존 프로필이 있는 경우 해당 user의 프로필 사진 삭제.
             const params = {
                 Bucket: 'wink-2023-2-bucket',
@@ -42,9 +40,7 @@ exports.checkProfile = async (req, res, next) => {
 // 회원 정보 수정
 exports.editMember = async (req, res, next) => {
     try {
-        const user = await req.token;
-
-        const member = await Member.updateOne({ kakaoId: user.kakaoId }, {
+        const member = await Member.updateOne({ kakaoId: req.token.kakaoId }, {
                $set: {
                     name: req.body.name,
                     profile: req.file.location,

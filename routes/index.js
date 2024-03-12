@@ -7,8 +7,4 @@ const s3Router = express.Router();
 //     res.json(req.file);
 // })
 
-s3Router.get('/', (req, res) => {
-    res.send(req.user);
-})
-
 module.exports = s3Router;
