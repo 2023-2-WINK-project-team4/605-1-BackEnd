@@ -11,6 +11,7 @@ const authenticate = (req, res, next) => {
         // 검증할 때 해당 ID를 다시 추출할 수 있음
         return next();
     } catch (error) {
+        console.log(error);
         if (error.name === 'TokenExpireError') {
             return res.status(419).json({
                 code: 419,

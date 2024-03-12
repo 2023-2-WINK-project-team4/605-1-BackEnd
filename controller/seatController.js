@@ -48,11 +48,6 @@ exports.rentSeat = async (req, res) => {
             return res.status(404).json({ message: '좌석을 찾을 수 없습니다.' });
         }
 
-        // 좌석이 이미 사용 중인 경우
-        if (seat.status === 'using') {
-            return res.status(400).json({ message: '이미 사용 중인 좌석입니다.' });
-        }
-
         // 좌석 상태 업데이트
         seat.status = 'using';
         seat.startTime = new Date();
@@ -67,6 +62,7 @@ exports.rentSeat = async (req, res) => {
 
 // 좌석 반납
 exports.returnSeat = async (req, res) => {
+    console.log('!');
     try {
         // 현재 인증된 사용자의 정보를 조회
         const member = await Member.findOne({ kakaoId : req.token.kakaoId });
