@@ -1,16 +1,9 @@
 const Meeting = require('../models/meetingTable');
-function getCurrentDate() {
-    const now = new Date();
-    const year = now.getFullYear();
-    let month = (now.getMonth() + 1).toString().padStart(2, '0');
-    let day = now.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-}
 
 // 날짜별 회의 테이블 내역 조회
 exports.allTable = async (req, res) => {
     try {
-        const selectedDate = req.query.date || getCurrentDate();
+        const selectedDate = req.params.date || new Date();
         const startOfDay = new Date(selectedDate);
         startOfDay.setUTCHours(0, 0, 0, 0);
         const endOfDay = new Date(selectedDate);

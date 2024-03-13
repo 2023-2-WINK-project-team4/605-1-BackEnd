@@ -4,7 +4,7 @@ const {allTable , addTable} = require('../controller/tableController')
 
 
 // 날짜 별 meetingTable 연결
-router.get('/', allTable);
+router.get('/:date', allTable);
   
 // meetingTable DB 추가
 router.post('/addTable', addTable);
