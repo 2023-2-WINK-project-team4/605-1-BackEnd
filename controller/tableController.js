@@ -3,9 +3,10 @@ const Meeting = require('../models/meetingTable');
 // 날짜별 회의 테이블 내역 조회
 exports.allTable = async (req, res) => {
     try {
-        const selectedDate = req.params.date.split(" ") || new Date();
-        const startOfDay = new Date(selectedDate[3], selectedDate[1], selectedDate[2]); // Y M D H M S
-        const endOfDay = new Date(selectedDate[3], selectedDate[1], selectedDate[2], 23, 59, 59);
+        const selectedDate = new Date(req.params.date) || new Date();
+        console.log(selectedDate);
+        const startOfDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDay()); // Y M D H M S
+        const endOfDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDay(), 23, 59, 59);
         const meetings = await Meeting.find({
             startTime: {
                 $gte: startOfDay,
