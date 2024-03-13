@@ -23,7 +23,7 @@ const reportRouter = require("./routes/report");
 // express 실행
 const app = express();
 
-app.set("port", process.env.PORT || 8080);
+app.set("port", process.env.PORT || 6051);
 
 // 세션 사용을 위해 맨 앞으로 가져와야 함.
 app.use(cookieParser(process.env.COOKIE_SECRET));
