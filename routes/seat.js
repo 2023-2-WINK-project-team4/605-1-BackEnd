@@ -11,7 +11,7 @@ router.get('/my-seat', authenticate, checkMySeat);
 router.patch('/rent', authenticate, rentSeat);
 
 // 좌석 반납
-router.patch('/return', authenticate, returnSeat); // POST 또는 PUT 메서드 사용 가능
+router.patch('/return', authenticate, returnSeat);
 
 // 좌석 조회
 router.get('/:club', getSeatsStatus);

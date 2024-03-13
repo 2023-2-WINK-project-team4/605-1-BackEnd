@@ -11,7 +11,6 @@ exports.create = async (req, res, next) => {
         })
         res.status(200).json({ msg : "신고 완료"})
     } catch (error) {
-        console.log(error);
         next(error)
     }
 }

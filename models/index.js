@@ -9,7 +9,6 @@ const connect = () => {
     }
 
     // 2. 몽구스와 몽고디비 연결
-    // .env 파일에서 MONGO_URI를 각자 자기 mongodb 아이디 비밀번호로 설정하기!
     mongoose.connect(process.env.MONGO_URI, {
         dbName: 'winkDB',
     });

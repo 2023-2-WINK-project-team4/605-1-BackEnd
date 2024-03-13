@@ -32,7 +32,6 @@ exports.checkProfile = async (req, res, next) => {
             next();
         }
     } catch (e) {
-        console.log(e);
         next(e);
     }
 }
@@ -49,7 +48,6 @@ exports.editMember = async (req, res, next) => {
                 }});
         res.json(member);
     } catch (err) {
-        console.error(err);
         next(err);
     }
 }
@@ -65,7 +63,6 @@ exports.getUser = async (req, res) => {
             seatNumber: seat ? seat.number : null
         })
     } catch (error) {
-        console.log("접속 완료");
-        console.error(error);
+        next(error)
     }
 }

@@ -4,11 +4,9 @@ const Meeting = require('../models/meetingTable');
 exports.allTable = async (req, res) => {
     try {
         const selectedDate = req.params.date ? new Date(req.params.date) : new Date();
-        selectedDate.setUTCHours(selectedDate.getUTCHours() + 9)
+        selectedDate.setUTCHours(selectedDate.getUTCHours() + 9) // 한국 표준 시간대로 설정 UTC+9
 
-        console.log(selectedDate);
-
-        const startOfDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()); // Y M D H M S
+        const startOfDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
         const endOfDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), 23, 59, 59);
         const meetings = await Meeting.find({
             startTime: {
@@ -16,6 +14,7 @@ exports.allTable = async (req, res) => {
                 $lt: endOfDay
             }
         }).sort({ startTime: 1 });
+
         res.json(meetings);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -34,8 +33,9 @@ exports.addTable = async (req, res) => {
         });
 
         await newMeeting.save();
-      res.status(200).json({ message: 'success' });
+
+        res.status(200).json({ message: 'success' });
     } catch (error) {
-      res.status(400).json({ message: error.message});
+        res.status(400).json({ message: error.message});
     }
 }

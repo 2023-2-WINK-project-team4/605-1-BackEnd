@@ -21,7 +21,6 @@ module.exports = () => {
             }
             return done(null, exUser);
         } catch (error) {
-            console.error(error);
             done(error);
         }
     }));

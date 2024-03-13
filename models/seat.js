@@ -22,7 +22,7 @@ const seat = new Schema({
         type: Date,
         default: null,
     },
-    memberId: { // member의 _id 연결
+    memberId: { // member FK
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Member',
         default : null

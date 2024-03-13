@@ -24,7 +24,6 @@ exports.checkMySeat = async (req, res) => {
             });
         }
     } catch (error) {
-        console.error(error);
         res.status(400).json({
             error: error.message
         });
@@ -62,7 +61,6 @@ exports.rentSeat = async (req, res) => {
 
 // 좌석 반납
 exports.returnSeat = async (req, res) => {
-    console.log('!');
     try {
         // 현재 인증된 사용자의 정보를 조회
         const member = await Member.findOne({ kakaoId : req.token.kakaoId });
@@ -81,6 +79,7 @@ exports.returnSeat = async (req, res) => {
             return res.status(400).json({ message: '이미 반납된 좌석입니다.' });
         }
 
+        // 좌석 이용 히스토리 생성
         await SeatHistory.create({
             memberName : member.name,
             studentId : member.studentId,
@@ -99,7 +98,6 @@ exports.returnSeat = async (req, res) => {
 
         res.status(200).json({ message: '좌석 반납 완료' });
     } catch (error) {
-        console.log(error)
         res.status(500).json({ message: '서버 오류' });
     }
 };
@@ -126,7 +124,6 @@ exports.getSeatsStatus = async (req, res) => {
 
         res.json(seatsStatus);
     } catch (error) {
-        console.log(error);
         res.status(500).json({ message: '서버 오류' });
     }
 };

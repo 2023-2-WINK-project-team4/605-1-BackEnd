@@ -1,11 +1,9 @@
 const express = require('express')
 const passport = require('passport')
 const authRouter = express.Router()
-const { loginWithKakao, logout} = require('../controller/authController')
+const { logout} = require('../controller/authController')
 const Member = require("../models/member");
-const jwt = require('jsonwebtoken')
 const {generateToken, verifyToken} = require("../util/auth/jwtHelper");
-const {authenticate} = require("../util/auth/authMiddleware");
 require('dotenv').config()
 
 
@@ -37,27 +35,20 @@ authRouter.get(
             }
 
             if (user.name === null) {
-                // 회원가입 페이지
+                // 회원가입으로!
                 res.status(200).json({
                     msg : "sign_up",
                     kakaoId: user.kakaoId
                 })
             } else {
                 const token = generateToken(user);
-                /*
-                * token = {
-                *   kakaoId: 1234,
-                *   club : wink,
-                *   name : 류건
-                * }
-                */
+                // 메인 화면으로!
                 return res.status(200).json({
                     msg: "success",
                     token : token
                 })
             }
         } catch (error) {
-            console.log(error)
             next(error);
         }
     }
@@ -83,25 +74,15 @@ authRouter.post('/join',async (req, res, next) => {
                 next(error);
             }
             const token = generateToken(user);
-            /*
-            * token = {
-            *   kakaoId: 1234,
-            *   club : wink,
-            *   name : 류건
-            * }
-            */
+
             res.status(200).json({
                 token : token,
                 msg: "회원 가입 성공",
             })
         });
     } catch (error) {
-        console.error(error);
         next(error)
     }
 });
-
-// 서비스 로그인 라우터
-// authRouter.get('/login/service/:kakaoId', loginWithKakao);
 
 module.exports = authRouter;

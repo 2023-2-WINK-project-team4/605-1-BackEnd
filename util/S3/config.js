@@ -10,6 +10,7 @@ AWS.config.update({
     region: 'ap-northeast-2',
 });
 
+// S3 configuration
 exports.uploadS3 = multer({
     storage: multerS3({
         s3: new AWS.S3(),

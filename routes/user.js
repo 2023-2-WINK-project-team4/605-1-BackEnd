@@ -7,8 +7,5 @@ const router = express.Router();
 router.route('/update')
     .get(getUser)
     .patch(uploadS3.single('profile'), editMember);
-    // .patch(checkProfile , uploadS3.single('profile'), editMember);
-
-router.get('/', getUser);
 
 module.exports = router;

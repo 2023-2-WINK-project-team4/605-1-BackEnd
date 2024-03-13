@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const seatHistory = new Schema({
-    memberName: { // member_name
+    memberName: {
         type: String,
         required: true,
     },
@@ -28,7 +28,7 @@ const seatHistory = new Schema({
         type: Date,
         default: Date.now,
     },
-    memberId: {
+    memberId: { // member FK
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Member',
         default : null
