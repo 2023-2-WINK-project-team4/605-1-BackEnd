@@ -5,8 +5,8 @@ exports.allTable = async (req, res) => {
     try {
         const selectedDate = new Date(req.params.date) || new Date();
         console.log(selectedDate);
-        const startOfDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDay()); // Y M D H M S
-        const endOfDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDay(), 23, 59, 59);
+        const startOfDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()); // Y M D H M S
+        const endOfDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), 23, 59, 59);
         const meetings = await Meeting.find({
             startTime: {
                 $gte: startOfDay,
