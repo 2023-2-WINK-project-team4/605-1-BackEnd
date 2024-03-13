@@ -10,3 +10,4 @@ router.get('/:date', allTable);
 router.post('/addTable', addTable);
 
 module.exports = router;
+
