@@ -36,7 +36,7 @@ authRouter.get(
 
             if (user.name === null) {
                 // 회원가입으로!
-                res.status(200).json({
+                return res.status(200).json({
                     msg : "sign_up",
                     kakaoId: user.kakaoId
                 })
@@ -75,7 +75,7 @@ authRouter.post('/join',async (req, res, next) => {
             }
             const token = generateToken(user);
 
-            res.status(200).json({
+            return res.status(200).json({
                 token : token,
                 msg: "회원 가입 성공",
             })

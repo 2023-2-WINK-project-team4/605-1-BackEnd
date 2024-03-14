@@ -46,7 +46,7 @@ exports.editMember = async (req, res, next) => {
                     club: req.body.club,
                     studentId: req.body.studentId
                 }});
-        res.json(member);
+        return res.status(200).json(member);
     } catch (err) {
         next(err);
     }
@@ -58,7 +58,7 @@ exports.getUser = async (req, res, next) => {
         const member = await Member.findOne({ kakaoId: req.token.kakaoId });
         const seat = await Seat.findOne({ memberId: member._id });
 
-        res.json({
+        return res.status(200).json({
             member,
             seatNumber: seat ? seat.number : null
         })
