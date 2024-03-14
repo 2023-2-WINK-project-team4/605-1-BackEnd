@@ -42,7 +42,7 @@ exports.editMember = async (req, res, next) => {
         const member = await Member.updateOne({ kakaoId: req.token.kakaoId }, {
                $set: {
                     name: req.body.name,
-                    profile: req.file.location,
+                    profile: req.file.location ? req.file.location : null,
                     club: req.body.club,
                     studentId: req.body.studentId
                 }});
@@ -53,7 +53,7 @@ exports.editMember = async (req, res, next) => {
 }
 
 // 회원 정보 조회
-exports.getUser = async (req, res) => {
+exports.getUser = async (req, res, next) => {
     try {
         const member = await Member.findOne({ kakaoId: req.token.kakaoId });
         const seat = await Seat.findOne({ memberId: member._id });
