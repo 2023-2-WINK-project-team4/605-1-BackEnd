@@ -41,10 +41,10 @@ exports.editMember = async (req, res, next) => {
     try {
         const member = await Member.updateOne({ kakaoId: req.token.kakaoId }, {
                $set: {
-                    name: req.body.name ? req.body.name : null,
+                    name: req.body.name,
                     profile: req.file.location,
-                    club: req.body.club ? req.body.club : null,
-                    studentId: req.body.studentId ? req.body.studentId : null
+                    club: req.body.club,
+                    studentId: req.body.studentId
                 }});
         res.json(member);
     } catch (err) {
